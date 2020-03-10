@@ -4,14 +4,14 @@ using CarDealership.Models;
 
 namespace CarDealership.Controllers
 {
-    public class ItemsController : Controller
+    public class CarsController : Controller
     {
 
         [HttpGet("/cars")]
         public ActionResult Index()
         {
-        List<Item> allItems = Item.GetAll();
-        return View(allItems);
+        List<Car> allCars = Car.GetAll();
+        return View(allCars);
         }
 
         [HttpGet("/cars/new")]

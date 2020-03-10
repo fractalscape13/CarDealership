@@ -9,20 +9,32 @@ namespace CarDealership.Models {
     public int Price { get; set; }
     public int Miles { get; set; }
     public string Info { get; set; }
+    private static List<Car> _instances = new List<Car> { };
+    public static List<Car> validCars = new List<Car> { };
+
 
     public Car(string makeModel, int price, int miles, string info)
     {
+      _instances.Add(this);
       MakeModel = makeModel;
       Price = price;
       Miles = miles;
       Info = info;
     }
 
-    public void SetPrice(int newPrice)
+    public static List<Car> GetAll()
     {
-      Price = newPrice;
+        return _instances;
+    }
+    public static List<Car> GetAllValidCars()
+    {
+        return validCars;
     }
 
+    public void SetValidCars()
+    {
+        validCars.Add(this);
+    }
 
     public bool WorthBuying(int maxPrice)
     {

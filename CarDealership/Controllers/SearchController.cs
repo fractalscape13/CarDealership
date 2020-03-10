@@ -4,14 +4,14 @@ using CarDealership.Models;
 
 namespace CarDealership.Controllers
 {
-    public class ItemsController : Controller
+    public class SearchController : Controller
     {
 
         [HttpGet("/search")]
         public ActionResult Index()
         {
-        List<Item> allItems = Item.GetAll();
-        return View(allItems);
+            List<Car> validCars = Car.GetAllValidCars();
+            return View(validCars);
         }
 
         [HttpGet("/search/new")]
@@ -21,9 +21,16 @@ namespace CarDealership.Controllers
         }
 
         [HttpPost("/search")]
-        public ActionResult Create(string description)
+        public ActionResult Create(int maxMiles, int maxPrice)
         {
-            Item myItem = new Item(description);
+            List<Car> allCars = Car.GetAll();
+            foreach (Car car in allCars)
+            {
+                if (car.MeetCriteria(maxMiles, maxPrice))
+                {
+                    car.SetValidCars();
+                }
+            }
             return RedirectToAction("Index");
         }
     }
